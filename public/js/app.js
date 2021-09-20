@@ -5186,7 +5186,9 @@ var Create = function Create() {
     }).then(function (response) {
       setMessage(response.message);
     })["catch"](function (error) {
-      setErrors(Object.values(error.response.data.errors));
+      if (error.status == 422) {
+        setErrors(Object.values(error.response.data.errors));
+      }
     });
   }
 
