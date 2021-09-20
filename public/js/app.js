@@ -5186,9 +5186,7 @@ var Create = function Create() {
     }).then(function (response) {
       setMessage(response.message);
     })["catch"](function (error) {
-      if (error.status == 422) {
-        setErrors(Object.values(error.response.data.errors));
-      }
+      setErrors(Object.values(error.response.data.errors));
     });
   }
 
@@ -5252,6 +5250,12 @@ var Create = function Create() {
           children: "Create User"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
+        className: "alert alert-danger position-fixed",
+        style: {
+          listStyle: 'none',
+          fontWeight: '600',
+          color: 'red'
+        },
         children: items
       })]
     })

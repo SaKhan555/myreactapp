@@ -25,12 +25,10 @@ export const Create = () => {
         }).then(function (response) {
             setMessage(response.message);
         }).catch(error => {
-            if(error.status == 422){
-                setErrors(Object.values(error.response.data.errors));
-            }
+            setErrors(Object.values(error.response.data.errors));
         });
     }
-        let items = errors.map(item => <li key={item}>{item}</li>);
+    let items = errors.map(item => <li key={item}>{item}</li>);
 
     return (
         <CardTemplate title="Create new user">
@@ -50,7 +48,7 @@ export const Create = () => {
                     </div>
                     <button className="btn btn-primary">Create User</button>
                 </form>
-                    <ul>{items}</ul>
+                    <ul className="alert alert-danger position-fixed" style={{listStyle: 'none',fontWeight: '600',color: 'red'}}>{items}</ul>
             </div>
         </CardTemplate>
     );
