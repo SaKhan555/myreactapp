@@ -10,34 +10,16 @@ import {
     Route,
     Link
 } from "react-router-dom";
-// import { render } from 'sass';
 
 class User extends React.Component {
     state = {
         users: [],
     }
-
-    // fetchUsers = async () => {
-    //     const res = await axios.get("api/users");
-    //     if (res.status === 200) {
-    //         this.setState({ users: res.data.users });
-    //     }
-    // }
-
-    // componentDidMount() {
-    //     this.fetchUsers();
-    // }
     render() {
         return (
-            <div>
+            <div className="App">
                 <Router>
-                    {/* <Switch> */}
-
                         <Navbar />
-                        {/* <Route exact path="/" component={Card} />
-                        <Route exact path="/users/create" component={Create} /> */}
-                    {/* </Switch> */}
-                    {/* <Card users={this.state.users} /> */}
                 </Router>
             </div>
         );

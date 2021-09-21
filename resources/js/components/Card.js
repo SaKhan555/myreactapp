@@ -16,7 +16,6 @@ import CardTemplate from './CardTemplate';
 export const Card = (props) => {
     return (
         <CardTemplate title="All Users">
-            <Link className="btn btn-primary" to="/users/create">Create New User</Link>
             <Table users={[]} />
         </CardTemplate>
     );

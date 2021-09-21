@@ -1,55 +1,43 @@
 import axios from 'axios';
-import { error } from 'jquery';
-import React, { useState } from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link,useHistory } from "react-router-dom";
 import CardTemplate from './CardTemplate';
 
 
 
 export const Create = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [name, setName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
     const [errors, setErrors] = useState([]);
-    const [message, setMessage] = useState('');
+    const history = useHistory();
 
     function handleSubmit(e) {
         e.preventDefault();
         axios.post('/api/users', {
             name, email, password
-        }).then(function (response) {
-            setMessage(response.message);
+        }).then((response) => {
+            console.log(response);
+            if(response.status == 200){
+                history.push('/');
+            }
         }).catch(error => {
             setErrors(Object.values(error.response.data.errors));
         });
     }
-    let items = errors.map(item => <li key={item}>{item}</li>);
 
     return (
         <CardTemplate title="Create new user">
-            <div className="col-md-6">
-                <form onSubmit={(e) => handleSubmit(e)}>
-                    <div className="form-group">
-                        <label htmlFor="name">Name:</label>
-                        <input type="text" className="form-control" placeholder="Name" id="name" onChange={e => setName(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email address:</label>
-                        <input type="email" className="form-control" placeholder="Enter email" id="email" onChange={e => setEmail(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="pwd">Password:</label>
-                        <input type="password" className="form-control" placeholder="Enter password" id="pwd" onChange={e => setPassword(e.target.value)} />
-                    </div>
-                    <button className="btn btn-primary">Create User</button>
-                </form>
-                    <ul className="alert alert-danger position-fixed" style={{listStyle: 'none',fontWeight: '600',color: 'red'}}>{items}</ul>
-            </div>
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <label htmlFor="name">Name:</label>
+                <input type="text" className="form-control" placeholder="Name" id="name" onChange={e => setName(e.target.value)} />
+                <label htmlFor="email">Email address:</label>
+                <input type="email" className="form-control" placeholder="Enter email" id="email" onChange={e => setEmail(e.target.value)} />
+                <label htmlFor="pwd">Password:</label>
+                <input type="password" className="form-control" placeholder="Enter password" id="pwd" onChange={e => setPassword(e.target.value)} />
+                <button className="create-button" style={{marginTop: '5px', padding: '5px'}}>Create</button>
+            </form>
+            {errors && errors.map(item => <li className="error" key={item}> {item} </li>)}
         </CardTemplate>
     );
 }

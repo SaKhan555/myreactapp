@@ -38,7 +38,7 @@ class UserController extends Controller
     {
         $validatedAttributes = $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'password' => 'required|min:8'
         ]);
         $validatedAttributes['password'] = bcrypt($request->password);
@@ -63,9 +63,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+
+        return response()->json(['user' => $user], 200);
     }
 
     /**
@@ -77,7 +79,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        return response()->join(['status' => 200]);
     }
 
     /**

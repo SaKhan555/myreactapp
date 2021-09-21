@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -6,6 +6,9 @@ import {
     Link
 } from "react-router-dom";
 import { Button } from './Button';
+import useData from './useData';
+
+
 
 
 
@@ -13,46 +16,32 @@ import { Button } from './Button';
 export const Table = (props) => {
 
     const [users, setUsers] = useState([]);
+    const [isPending, setIsPending] = useState(true);
 
     const fetchUsers = async () => {
         const res = await axios.get("api/users");
         if (res.status === 200) {
             setUsers(res.data.users);
+            setIsPending(false);
         }
     }
 
     useEffect(() => {
+       setTimeout(() => {
         fetchUsers();
+       }, 2000); 
     }, []);
 
+ 
+
     return (
-        <div>
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.created_at}</td>
-                            <td className="">
-                                    <Link className="btn btn-primary" to={`/edit/${users.id}`}>Edit</Link>
-                                    {/* <Link className="btn btn-danger">Delete</Link> */}
-                                    
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="blog-list">
+        {isPending && <h3>Loading...</h3>}
+            {users.map(user => (
+                <div className="blog-preview" key={user.id} >
+                    <h2>{user.name} {user.email} <Link to={"/users/edit/"+user.id} className="create-button">Edit</Link></h2>     
+                </div>
+            ))}
         </div>
     );
 }

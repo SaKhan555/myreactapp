@@ -7,27 +7,35 @@ import {
 } from "react-router-dom";
 import { Card } from './Card';
 import { Create } from './Create';
+import Edit from './Edit';
 
 export const Navbar = () => {
     return (
         <div>
             {/* <Router> */}
-                <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-                    <ul className="navbar-nav">
-                        <li className="nav-item active">
-                            <Link to="/" className="nav-link">Home</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/users" className="nav-link">Users</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/about" className="nav-link">About</Link>
-                        </li>
-                    </ul>
-                </nav>
+            <nav className="navbar">
+                <h1>MyApp</h1>
+                <div className="links">
+                    <Link to="/">Home</Link>
+                    <Link to="/users/create" style={{
+                        color: 'white',
+                        backgroundColor: '#f1356d',
+                        borderRadius: '8px'
+                    }}>Create User</Link>
+                </div>
+            </nav>
             <Switch>
-                <Route exact path="/" component={Card} />
-                <Route exact path="/users/create" component={Create} />
+                <Route exact path="/">
+                    <Card />
+                </Route>
+                <Route path="/users/create">
+                    <Create />
+                </Route>
+                {/* <Route path="/users/edit/:id" >
+                    <Edit />
+                </Route> */}
+
+                <Route exact path="/users/edit/:id" component={Edit} />
             </Switch>
             {/* </Router> */}
         </div>
